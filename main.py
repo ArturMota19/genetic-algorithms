@@ -65,17 +65,54 @@ def generate_initial_population(population_size, num_items):
     population.append(cromossome) # se tiver tudo ok eu adiciono ele na populacao
   return population
 
+# faço seleção por roleta
+# a ideia é que os individuos mais fortes tenham mais chances de serem selecionados
 # P2 - Seleção por roleta
-#def roulette_selection(population):
+def roulette_selection(population):
+  fitness = []  # lista de fitness para cada cromossomo
+  for cromossome in population:
+    # pra cada cromossomo, vou calcular o valor total dele
+    total_value = 0
+    for i in range(len(cromossome)):
+      gen = cromossome[i] # pego o gen do cromossomo
+      if gen == 1:
+        total_value += items[i]["value"]
+    fitness.append(total_value)
+
+  total_fitness = sum(fitness)  # soma total dos fitness
+  probabilities = []
+  for f in fitness:
+    if total_fitness == 0: # se o fitness total for 0, a probabilidade vai ser 0
+      probabilities.append(0)
+    else:
+      probabilities.append(f / total_fitness) # probabilidade proporcional ao fitness
+      # vai ser proporcional pq se o fitness for maior, a probabilidade de ser selecionado vai ser maior tbm
+      # se o fitness de um cromossomo for 30 e o total for 100, ele vai ter 0.3 de 1.0 de chance de ser escolhido
+  selected = []
+  for _ in range(len(population)):
+    r = random.uniform(0, 1)  # número aleatório entre 0 e 1
+    cumulative = 0
+    for i, probability in enumerate(probabilities):
+      cumulative += probability
+      if r <= cumulative:
+        selected.append(population[i])
+        break
+  # TESTE DA ROLETA
+  print("Selecionados:")
+  for ind in selected:
+    print(ind)
+  return selected
   
 
 # Gerar a população inicial
 size = 50 # definido no enunciado da questao
 num_items = len(items) # tenho que pegar o "n", qtd de itens do problema
+# P1
 population = generate_initial_population(size, num_items)
-best = check_best(population) # checo o melhor cromossomo e o valor total dele
-print("melhor da população", best[0], "valor dele: ", best[1]) 
+# P2
+population = roulette_selection(population) # seleciono a populacao pela roleta
+
 #PRINT DE TESTES
-for individual in population:
-    print(individual)
+# for individual in population:
+#     print(individual)
 
