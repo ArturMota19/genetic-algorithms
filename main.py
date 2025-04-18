@@ -92,15 +92,13 @@ def roulette_selection(population):
   for _ in range(len(population)):
     r = random.uniform(0, 1)  # número aleatório entre 0 e 1
     cumulative = 0
-    for i, probability in enumerate(probabilities):
-      cumulative += probability
-      if r <= cumulative:
-        selected.append(population[i])
-        break
-  # TESTE DA ROLETA
-  print("Selecionados:")
-  for ind in selected:
-    print(ind)
+    for i in range(len(probabilities)): # vou percorrer a lista de probabilidades
+        cumulative += probabilities[i]
+        # vou somando as probabilidades, e quando o numero aleatorio for menor que a soma, eu seleciono
+        # a chance de selecionar um individuo vai ser proporcional ao fitness dele
+        if r <= cumulative:
+          selected.append(population[i])
+          break
   return selected
   
 
