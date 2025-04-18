@@ -8,6 +8,8 @@ por roleta e representações binárias.
 """
 # a mochila tem limite de 15 kg e os 10 itens são os seguintes:
 limitWeight = 15  # peso maximo
+generations = 200 # numero de geracoes
+
 items = [ #id, peso e valor
     {"id": "A", "weight": 2, "value": 40},
     {"id": "B", "weight": 3, "value": 50},
@@ -30,16 +32,29 @@ FUNÇÃO OBJETIVO:
 Maximizar o valor, sujeito ao peso máximo de 15 kg
 ===============================================================================================
 """
-# P1 - População inicial, tamanho 50 individuos
+# Helpers para ajudar nos passos
 def check_if_valid(cromossome):
   total = 0
   for i in range(len(cromossome)): # vou percorrendo o cromossomo
     if cromossome[i] == 1: # se for necessario contar o peso
       total += items[i]["weight"] # somo o peso do item
-  print(total <= limitWeight) # TESTE PRA VER SE ELE É FACTIVEL 
   return total <= limitWeight # se estourar o peso ele nao eh factivel
 
+def check_best(population):
+  best = 0 # maximo de valor
+  best_cromossome = [] # melhor cromossomo
+  for cromossome in population:
+    total = 0 # valor total
+    for i in range(len(cromossome)):
+      if cromossome[i] == 1:
+        total += items[i]["value"]
+    if total > best:
+      best = total
+      best_cromossome = cromossome
+  return best_cromossome, best # retorna o melhor cromossomo e o valor total dele
+  
 
+# P1 - População inicial, tamanho 50 individuos
 def generate_initial_population(population_size, num_items):
   population = [] # popul. como vazia
   for _ in range(population_size): # Faço um for pra preencher, a depender do tamanho que passei lá embaixo
@@ -50,11 +65,17 @@ def generate_initial_population(population_size, num_items):
     population.append(cromossome) # se tiver tudo ok eu adiciono ele na populacao
   return population
 
+# P2 - Seleção por roleta
+#def roulette_selection(population):
+  
+
 # Gerar a população inicial
-size = 50 #definido no enunciado da questao
+size = 50 # definido no enunciado da questao
 num_items = len(items) # tenho que pegar o "n", qtd de itens do problema
 population = generate_initial_population(size, num_items)
-# PRINT DE TESTES
+best = check_best(population) # checo o melhor cromossomo e o valor total dele
+print("melhor da população", best[0], "valor dele: ", best[1]) 
+#PRINT DE TESTES
 # for individual in population:
 #     print(individual)
 
