@@ -76,6 +76,6 @@ population = generate_initial_population(size, num_items)
 best = check_best(population) # checo o melhor cromossomo e o valor total dele
 print("melhor da população", best[0], "valor dele: ", best[1]) 
 #PRINT DE TESTES
-# for individual in population:
-#     print(individual)
+for individual in population:
+    print(individual)
 
