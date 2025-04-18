@@ -30,9 +30,17 @@ FUNÇÃO OBJETIVO:
 Maximizar o valor, sujeito ao peso máximo de 15 kg
 ===============================================================================================
 """
-# Passo 1 - Criar a população inicial, tamanho 50 individuos
+# P1 - População inicial, tamanho 50 individuos
+def check_if_valid(individual):
+  total = 0
+  for i in range(len(individual)): # vou percorrendo o cromossomo
+    if individual[i] == 1: # se for necessario contar o peso
+      total += items[i]["weight"] # somo o peso do item
+  return total <= limitWeight # se estourar o peso ele nao eh factivel
+
+
 def generate_initial_population(population_size, num_items):
-  population = [] # Define a popul. como vazia
+  population = [] # popul. como vazia
   for _ in range(population_size): # Faço um for pra preencher, a depender do tamanho que passei lá embaixo
     cromossome = [random.randint(0, 1) for _ in range(num_items)] # for pra gerar cromossomos
     population.append(cromossome) # adiciono o cromossomo na população
