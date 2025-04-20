@@ -1,5 +1,5 @@
 import random
-
+import matplotlib.pyplot as plt
 """
 Desenvolver uma solução baseada em algoritmos genéticos 
 para maximizar o valor total de itens inseridos em uma 
@@ -162,7 +162,13 @@ for generation in range(generations):
   best.append(best_value) # adiciono o valor dele na lista de melhores
   
   population = new_generation # a nova geração vai ser a população agora
-  print(best_value)
   
-  
+
+plt.plot(best) # ploto o gráfico com os melhores valores por geração
+plt.title("Melhor valor por geração")
+plt.xlabel("Geração")
+plt.ylabel("Valor")
+plt.grid()
+plt.show() # mostro o gráfico
+
 
