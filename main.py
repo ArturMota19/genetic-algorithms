@@ -100,7 +100,15 @@ def roulette_selection(population):
           selected.append(population[i])
           break
   return selected
-  
+
+# P3 - Crossover
+# preciso definir o ponto de crossover, e fazer a troca dos genes entre os dois individuos
+def crossover(parent1, parent2):
+  # Ponto de crossover entre 1 e 2 (documento)
+  crossover_point = random.randint(1, len(parent1) - 1) # ponto de crossover aleatorio entre 1 e o tamanho do cromossomo -1
+  child1 = parent1[:crossover_point] + parent2[crossover_point:] # o primeiro filho vai ser a parte do pai 1 e a parte do pai 2
+  child2 = parent2[:crossover_point] + parent1[crossover_point:] # o segundo filho vai ser a parte do pai 2 e a parte do pai 1
+  return child1, child2 
 
 # Gerar a população inicial
 size = 50 # definido no enunciado da questao
