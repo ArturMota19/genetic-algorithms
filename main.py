@@ -128,9 +128,7 @@ def mutate(cromossome, mutation=0.05):
 
 # Gerar a população inicial
 size = 50 # definido no enunciado da questao
+best = [] # vou guardar os melhoires cromossomos por geração, pra fazer o gráfico dps
 num_items = len(items) # tenho que pegar o "n", qtd de itens do problema
-# P1
-population = generate_initial_population(size, num_items)
-# P2
-population = roulette_selection(population) # seleciono a populacao pela roleta
+
 
