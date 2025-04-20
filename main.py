@@ -118,6 +118,14 @@ def two_crossover(parent1, parent2):
   child2 = parent2[:p1] + parent1[p1:p2] + parent2[p2:] # o segundo filho vai ser a parte do pai 2, pai 1 e pai 2
   return child1, child2
 
+def mutate(cromossome, mutation=0.05):
+  # tentando fazer mutação com 5%
+  for i in range(len(cromossome)): # percorro o cromossomo todo
+    if random.random() < mutation: # se eu realmente tiver que fazer a mutação
+      cromossome[i] = 1 - cromossome[i] # troco o gene. 0 vira 1 e 1 vira 0
+  return cromossome
+
+
 # Gerar a população inicial
 size = 50 # definido no enunciado da questao
 num_items = len(items) # tenho que pegar o "n", qtd de itens do problema
@@ -125,8 +133,4 @@ num_items = len(items) # tenho que pegar o "n", qtd de itens do problema
 population = generate_initial_population(size, num_items)
 # P2
 population = roulette_selection(population) # seleciono a populacao pela roleta
-
-#PRINT DE TESTES
-# for individual in population:
-#     print(individual)
 
