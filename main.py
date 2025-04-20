@@ -131,4 +131,38 @@ size = 50 # definido no enunciado da questao
 best = [] # vou guardar os melhoires cromossomos por geração, pra fazer o gráfico dps
 num_items = len(items) # tenho que pegar o "n", qtd de itens do problema
 
+population = generate_initial_population(size, num_items) # gero a populacao inicial, que vai entrar pras gerações
+for generation in range(generations):
+  # faço a seleção, pra pegar os caras ali de cima
+  selected = roulette_selection(population)
+  # agora vai ser o cruzamento (crossover)
+  new_generation = [] # nova geração
+  
+  for _ in range(int((size * 0.8 // 2))): # 80% da população vai ser gerada por crossover
+    p1 = random.choice(selected) # seleciono um pai aleatorio
+    p2 = random.choice(selected) # seleciono outro pai aleatorio
+    # crossover entre os dois pais, vou usar o one crossover mesmo, de um ponto
+    c1, c2 = one_crossover(p1, p2)
+    # faço a mutação nos filhos
+    c1 = mutate(c1)
+    c2 = mutate(c2)
+    # adiciono os filhos na nova geração
+    if check_if_valid(c1): # se o filho for valido, adiciono na nova geracao
+      new_generation.append(c1)
+    if check_if_valid(c2):
+      new_generation.append(c2)
+  
+  # agora so completar com o que restou da geração anterior
+  while len(new_generation) < size: # enquanto a nova geração tiver tamanho menor que 50
+    # adiciono os individuos da geração anterior
+    new_generation.append(random.choice(population))
+  
+  # agr vou salvar o melhor da geração pra usar no grafico de convergencia
+  best_cromossome, best_value = check_best(new_generation) # pego o melhor cromossomo e o valor dele
+  best.append(best_value) # adiciono o valor dele na lista de melhores
+  
+  population = new_generation # a nova geração vai ser a população agora
+  print(best_value)
+  
+  
 
